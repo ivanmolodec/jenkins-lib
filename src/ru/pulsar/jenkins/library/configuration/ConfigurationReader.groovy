@@ -65,6 +65,7 @@ class ConfigurationReader implements Serializable {
             "sonarQubeOptions",
             "smokeTestOptions",
             "syntaxCheckOptions",
+            "edtValidateOptions",
             "resultsTransformOptions",
             "notificationsOptions",
             "emailNotificationOptions",

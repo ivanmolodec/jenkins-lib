@@ -1,17 +1,23 @@
 package ru.pulsar.jenkins.library.steps
 
-
+import hudson.FilePath
 import ru.pulsar.jenkins.library.IStepExecutor
 import ru.pulsar.jenkins.library.configuration.JobConfiguration
 import ru.pulsar.jenkins.library.ioc.ContextRegistry
 import ru.pulsar.jenkins.library.utils.Constants
 import ru.pulsar.jenkins.library.utils.EDT
+import ru.pulsar.jenkins.library.utils.FileUtils
 import ru.pulsar.jenkins.library.utils.Logger
+
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.StandardCopyOption
 
 class DesignerToEdtFormatTransformation implements Serializable {
 
     public static final String PROJECT_NAME = 'temp'
     public static final String WORKSPACE = 'build/edt-workspace'
+    public static final String SETTINGS = '.settings'
     public static final String WORKSPACE_ZIP = 'build/edt-workspace.zip'
     public static final String WORKSPACE_ZIP_STASH = 'edt-workspace-zip'
 
@@ -36,6 +42,7 @@ class DesignerToEdtFormatTransformation implements Serializable {
         def workspaceDir = "$env.WORKSPACE/$WORKSPACE"
         def configurationRoot = new File(env.WORKSPACE, config.srcDir).getAbsolutePath()
         def edtVersionForRing = EDT.ringModule(config)
+        def options = config.edtValidateOptions
 
         steps.deleteDir(workspaceDir)
 
@@ -46,6 +53,11 @@ class DesignerToEdtFormatTransformation implements Serializable {
         def ringOpts = [Constants.DEFAULT_RING_OPTS]
         steps.withEnv(ringOpts) {
             steps.cmd(ringCommand)
+        }
+
+        if (!options.managedEnvironmentsFile.empty && fileExists(options.managedEnvironmentsFile)) {
+            FilePath managedEnvironmentsFile = FileUtils.getFilePath("$env.WORKSPACE/$options.managedEnvironmentsFile")
+            Files.copy(managedEnvironmentsFile as Path, "$workspaceDir/$PROJECT_NAME/$SETTINGS" as Path, StandardCopyOption.REPLACE_EXISTING)
         }
 
         steps.zip(WORKSPACE, WORKSPACE_ZIP)

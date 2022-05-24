@@ -235,6 +235,17 @@
         }
       }
     },
+    "edtValidate" : {
+      "type" : "object",
+      "id" : "urn:jsonschema:ru:pulsar:jenkins:library:configuration:EdtValidateOptions",
+      "description" : "Настройки валидации EDT",
+      "properties" : {
+        "managedEnvironmentsFile" : {
+          "type" : "string",
+          "description" : "Путь к конфигурационному файлу проверок EDT.\n    По умолчанию содержит значение \"./tools/ManagedEnvironments.prefs\".\n    "
+        }
+      }
+    },
     "smoke" : {
       "type" : "object",
       "id" : "urn:jsonschema:ru:pulsar:jenkins:library:configuration:SmokeTestOptions",

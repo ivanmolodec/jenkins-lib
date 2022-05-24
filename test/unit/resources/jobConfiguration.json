@@ -23,6 +23,9 @@
   "syntaxCheck": {
     "checkModes": ["-ThinClient"]
   },
+  "edtValidate": {
+    "managedEnvironmentsFile": "./tools/ManagedEnvironments.prefs"
+  },
   "resultsTransform": {
     "removeSupport": false
   },

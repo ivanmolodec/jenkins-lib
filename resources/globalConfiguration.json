@@ -71,6 +71,9 @@
     ],
     "vrunnerSettings": "./tools/vrunner.json"
   },
+  "edtValidate": {
+    "managedEnvironmentsFile": "./tools/ManagedEnvironments.prefs"
+  },
   "smoke": {
     "vrunnerSettings": "./tools/vrunner.json",
     "xddConfigPath": "./tools/xUnitParams.json",

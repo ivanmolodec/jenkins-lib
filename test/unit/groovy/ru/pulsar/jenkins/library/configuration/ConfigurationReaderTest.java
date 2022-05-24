@@ -47,6 +47,8 @@ class ConfigurationReaderTest {
 
     assertThat(jobConfiguration.getSyntaxCheckOptions().getCheckModes()).hasSize(1);
 
+    assertThat(jobConfiguration.getEdtValidateOptions().getManagedEnvironmentsFile()).isEqualTo("./tools/ManagedEnvironments.prefs");
+
     assertThat(jobConfiguration.getResultsTransformOptions().getRemoveSupport()).isFalse();
     assertThat(jobConfiguration.getResultsTransformOptions().getSupportLevel()).isZero();
 

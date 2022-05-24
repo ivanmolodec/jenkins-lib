@@ -51,6 +51,10 @@ class JobConfiguration implements Serializable {
     @JsonPropertyDescription("Настройки синтаксического контроля")
     SyntaxCheckOptions syntaxCheckOptions;
 
+    @JsonProperty("edtValidate")
+    @JsonPropertyDescription("Настройки валидации EDT")
+    EdtValidateOptions edtValidateOptions;
+
     @JsonProperty("smoke")
     @JsonPropertyDescription("Настройки дымового тестирования")
     SmokeTestOptions smokeTestOptions;
@@ -83,6 +87,7 @@ class JobConfiguration implements Serializable {
             ", bddOptions=" + bddOptions +
             ", sonarQubeOptions=" + sonarQubeOptions +
             ", syntaxCheckOptions=" + syntaxCheckOptions +
+            ", EDTValidateOptions=" + edtValidateOptions +
             ", smokeTestOptions=" + smokeTestOptions +
             ", resultsTransformOptions=" + resultsTransformOptions +
             ", notificationOptions=" + notificationsOptions +
