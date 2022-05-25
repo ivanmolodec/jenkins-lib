@@ -1,6 +1,5 @@
 package ru.pulsar.jenkins.library.steps
 
-import hudson.FilePath
 import ru.pulsar.jenkins.library.IStepExecutor
 import ru.pulsar.jenkins.library.configuration.JobConfiguration
 import ru.pulsar.jenkins.library.ioc.ContextRegistry
@@ -9,10 +8,7 @@ import ru.pulsar.jenkins.library.utils.EDT
 import ru.pulsar.jenkins.library.utils.FileUtils
 import ru.pulsar.jenkins.library.utils.Logger
 
-import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
-import java.nio.file.StandardCopyOption
 
 class DesignerToEdtFormatTransformation implements Serializable {
 
@@ -57,9 +53,9 @@ class DesignerToEdtFormatTransformation implements Serializable {
         }
 
         if (!options.managedEnvironmentsFile.empty && steps.fileExists(options.managedEnvironmentsFile)) {
-            FilePath managedEnvironmentsFile = FileUtils.getFilePath("$env.WORKSPACE/$options.managedEnvironmentsFile")
-            Path copied = Paths.get("$workspaceDir/$PROJECT_NAME/$SETTINGS")
-            Files.copy(managedEnvironmentsFile as Path, copied, StandardCopyOption.REPLACE_EXISTING)
+            String managedEnvironmentsFile = FileUtils.getFilePath("$env.WORKSPACE/$options.managedEnvironmentsFile").readToString()
+            String copied = Paths.get("$workspaceDir/$PROJECT_NAME/$SETTINGS").toAbsolutePath()
+            steps.fileOperations([steps.fileCopyOperation(copied, '', managedEnvironmentsFile, false, false, '', '')])
         }
 
         steps.zip(WORKSPACE, WORKSPACE_ZIP)

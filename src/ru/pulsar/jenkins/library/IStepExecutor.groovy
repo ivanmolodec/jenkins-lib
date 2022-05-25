@@ -6,6 +6,7 @@ import jenkins.plugins.http_request.ResponseContentSupplier
 import org.jenkinsci.plugins.pipeline.utility.steps.fs.FileWrapper
 import org.jenkinsci.plugins.workflow.support.actions.EnvironmentAction
 import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
+import sp.sd.fileoperations.FileOperation
 
 interface IStepExecutor {
 
@@ -53,6 +54,10 @@ interface IStepExecutor {
 
     void deleteDir(String path)
 
+    void fileOperations(List<FileOperation> fileOperations)
+
+    FileOperation fileCopyOperation(String includes, String excludes, String targetLocation, boolean flattenFiles, boolean renameFiles, String sourceCaptureExpression, String targetNameExpression)
+
     def withEnv(List<String> strings, Closure body)
 
     def archiveArtifacts(String path)
@@ -96,4 +101,5 @@ interface IStepExecutor {
     def brokenTestsSuspects()
 
     RunWrapper currentBuild()
+
 }

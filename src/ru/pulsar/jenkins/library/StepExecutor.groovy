@@ -7,6 +7,7 @@ import org.jenkinsci.plugins.pipeline.utility.steps.fs.FileWrapper
 import org.jenkinsci.plugins.workflow.support.actions.EnvironmentAction
 import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 import ru.yandex.qatools.allure.jenkins.config.ResultsConfig
+import sp.sd.fileoperations.FileOperation
 
 class StepExecutor implements IStepExecutor {
 
@@ -98,6 +99,24 @@ class StepExecutor implements IStepExecutor {
     @Override
     void createDir(String path) {
         steps.createDir(path)
+    }
+
+    @Override
+    void fileOperations(List<FileOperation> fileOperations) {
+        steps.fileOperations(List<FileOperation>)
+    }
+
+    @Override
+    FileOperation fileCopyOperation(String includes, String excludes, String targetLocation, boolean flattenFiles, boolean renameFiles, String sourceCaptureExpression, String targetNameExpression) {
+        steps.fileCopyOperation(
+            includes: includes,
+            excludes: excludes,
+            targetLocation: targetLocation,
+            flattenFiles: flattenFiles,
+            renameFiles: renameFiles,
+            sourceCaptureExpression: sourceCaptureExpression,
+            targetNameExpression: targetNameExpression
+        )
     }
 
     @Override
