@@ -56,7 +56,7 @@ class DesignerToEdtFormatTransformation implements Serializable {
             steps.cmd(ringCommand)
         }
 
-        if (!options.managedEnvironmentsFile.empty && fileExists(options.managedEnvironmentsFile)) {
+        if (!options.managedEnvironmentsFile.empty && steps.fileExists(options.managedEnvironmentsFile)) {
             FilePath managedEnvironmentsFile = FileUtils.getFilePath("$env.WORKSPACE/$options.managedEnvironmentsFile")
             Path copied = Paths.get("$workspaceDir/$PROJECT_NAME/$SETTINGS")
             Files.copy(managedEnvironmentsFile as Path, copied, StandardCopyOption.REPLACE_EXISTING)
