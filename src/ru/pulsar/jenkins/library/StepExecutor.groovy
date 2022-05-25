@@ -103,7 +103,7 @@ class StepExecutor implements IStepExecutor {
 
     @Override
     void fileOperations(List<FileOperation> fileOperations) {
-        steps.fileOperations(List<FileOperation>)
+        steps.fileOperations(fileOperations)
     }
 
     @Override
