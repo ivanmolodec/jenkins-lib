@@ -55,7 +55,7 @@ class DesignerToEdtFormatTransformation implements Serializable {
         if (!options.managedEnvironmentsFile.empty && steps.fileExists(options.managedEnvironmentsFile)) {
             String managedEnvironmentsFile = FileUtils.getLocalPath(FileUtils.getFilePath("$env.WORKSPACE/$options.managedEnvironmentsFile"))
             String edtSettingsPath = FileUtils.getLocalPath(FileUtils.getFilePath("$workspaceDir/$PROJECT_NAME/$SETTINGS/"))
-            steps.fileOperations([steps.fileCopyOperation(managedEnvironmentsFile, '', edtSettingsPath, false, false, '', '')])
+            steps.fileOperations([steps.fileCopyOperation(managedEnvironmentsFile, '', edtSettingsPath, true, false, '', '')])
         }
 
         steps.zip(WORKSPACE, WORKSPACE_ZIP)
