@@ -43,7 +43,7 @@ class DesignerToEdtFormatTransformation implements Serializable {
 
         Logger.println("Конвертация исходников из формата конфигуратора в формат EDT")
 
-        def ringCommand = "ring $edtVersionForRing workspace import --configuration-files \"$configurationRoot\" --project-name $PROJECT_NAME --workspace-location \"$workspaceDir\" \necho %ERRORLEVEL% \nexit /b %ERRORLEVEL%"
+        def ringCommand = "ring $edtVersionForRing workspace import --configuration-files \"$configurationRoot\" --project-name $PROJECT_NAME --workspace-location \"$workspaceDir\" & exit /b %ERRORLEVEL%"
 
         def ringOpts = [Constants.DEFAULT_RING_OPTS]
         steps.withEnv(ringOpts) {
