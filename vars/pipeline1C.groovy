@@ -133,6 +133,7 @@ void call() {
                         }
                         steps {
                             timeout(time: config.timeoutOptions.designerToEdtFormatTransformation, unit: TimeUnit.MINUTES) {
+                                createDir('build/logs')
                                 designerToEdtFormatTransformation config
                             }
                         }
