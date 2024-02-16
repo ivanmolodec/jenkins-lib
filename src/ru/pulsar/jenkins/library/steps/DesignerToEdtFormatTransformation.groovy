@@ -52,7 +52,6 @@ class DesignerToEdtFormatTransformation implements Serializable {
             steps.cmd(ringCommand)
             if (ringLogFile.readToString().contains("error")) {
                 Logger.println("Ошибка при выполнении команды ring")
-                steps.error(ringLogFile.readToString())
             }
         }
 
