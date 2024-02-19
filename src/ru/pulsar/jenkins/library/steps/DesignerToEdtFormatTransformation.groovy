@@ -47,7 +47,7 @@ class DesignerToEdtFormatTransformation implements Serializable {
 
         def ringOpts = [Constants.DEFAULT_RING_OPTS]
         steps.withEnv(ringOpts) {
-            String ringMessage = steps.cmd(ringCommand, false, true)
+            ringMessage = steps.cmd(ringCommand, false, true)
             if (ringMessage.contains("error")) {
                 steps.error(ringMessage)
             }
