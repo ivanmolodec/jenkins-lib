@@ -34,24 +34,22 @@ class DesignerToEdtFormatTransformation implements Serializable {
 
         def env = steps.env();
 
-        def workspaceDir = FileUtils.getFilePath("$env.WORKSPACE/$WORKSPACE")
+        String workspaceDir = FileUtils.getFilePath("$env.WORKSPACE/$WORKSPACE").getRemote()
         def srcDir = config.srcDir
         def configurationRoot = FileUtils.getFilePath("$env.WORKSPACE/$srcDir")
-        def ringLogFile = FileUtils.getFilePath("$env.WORKSPACE/ringlog.txt")
         def edtVersionForRing = EDT.ringModule(config)
         
-        steps.deleteDir(workspaceDir.getRemote())
+        steps.deleteDir(workspaceDir)
 
         Logger.println("Конвертация исходников из формата конфигуратора в формат EDT")
 
-        def ringCommand = "call ring $edtVersionForRing workspace import --configuration-files \"$configurationRoot\" --project-name $PROJECT_NAME --workspace-location \"$workspaceDir\" > \"$ringLogFile\""
+        def ringCommand = "call ring $edtVersionForRing workspace import --configuration-files \"$configurationRoot\" --project-name $PROJECT_NAME --workspace-location \"$workspaceDir\""
 
         def ringOpts = [Constants.DEFAULT_RING_OPTS]
         steps.withEnv(ringOpts) {
-            steps.cmd(ringCommand)
-            if (ringLogFile.readToString().contains("error")) {
-                Logger.println("Ошибка при выполнении команды ring")
-                steps.error(ringLogFile.readToString())
+            String ringMessage = steps.cmd(ringCommand, false, true)
+            if (ringMessage.contains("error")) {
+                steps.error(ringMessage)
             }
         }
 
