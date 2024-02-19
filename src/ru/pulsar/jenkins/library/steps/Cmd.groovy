@@ -19,14 +19,10 @@ class Cmd implements Serializable {
     def run() {
         IStepExecutor steps = ContextRegistry.getContext().getStepExecutor()
 
+        def returnValue
+
         if (returnStatus & returnStdout) {
-            String returnValue = "returnStatus and returnStdout are not supported at the same time"
-            return returnValue
-        }
-        if (returnStdout) {
-            String returnValue
-        } else {
-            int returnValue
+            return "returnStatus and returnStdout are not supported at the same time"
         }
 
         if (steps.isUnix()) {
