@@ -16,7 +16,7 @@ class Cmd implements Serializable {
         this.returnStdout = returnStdout
     };
 
-    int run() {
+    def run() {
         IStepExecutor steps = ContextRegistry.getContext().getStepExecutor()
 
         if (returnStatus & returnStdout) {
