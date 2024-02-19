@@ -5,7 +5,7 @@ import ru.pulsar.jenkins.library.ioc.ContextRegistry
 
 class Cmd implements Serializable {
 
-    private String script
+    private String script;
     private boolean returnStatus
     private boolean returnStdout
     private String encoding = 'UTF-8'
