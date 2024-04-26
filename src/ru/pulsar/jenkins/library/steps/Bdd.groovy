@@ -30,12 +30,18 @@ class Bdd implements Serializable {
 
             steps.createDir('build/out')
 
-            steps.catchError {
+            try {
                 config.bddOptions.vrunnerSteps.each {
                     Logger.println("Шаг запуска сценариев командой ${it}")
                     String vrunnerPath = VRunner.getVRunnerPath();
                     VRunner.exec("$vrunnerPath ${it} --ibconnection \"/F./build/ib\"")
                 }
+            } catch (Exception err) {
+                Logger.println(err.printStackTrace())
+                Logger.println(err.toString())
+                Logger.println(err.cause.toString())
+
+                steps.unstable(err.message)
             }
         }
 
