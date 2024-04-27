@@ -37,7 +37,7 @@ class Bdd implements Serializable {
                 String vrunnerPath = VRunner.getVRunnerPath()
                 returnStatuses.add(VRunner.exec("$vrunnerPath ${it} --ibconnection \"/F./build/ib\""))
             }
-            if (returnStatuses.contains(0) or returnStatuses.contains(2)) {
+            if (returnStatuses.contains(0) || returnStatuses.contains(2)) {
                 Logger.println("Тестирование сценариев завершилось успешно")
             } else if (returnStatuses.contains(1)) {
                 steps.unstable("Тестирование сценариев завершилось, но часть фич/сценариев упала")
