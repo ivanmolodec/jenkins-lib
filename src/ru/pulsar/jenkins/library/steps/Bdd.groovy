@@ -31,7 +31,7 @@ class Bdd implements Serializable {
             steps.installLocalDependencies()
 
             steps.createDir('build/out')
-            def returnStatuses = []
+            List<Integer> returnStatuses
             config.bddOptions.vrunnerSteps.each {
                 Logger.println("Шаг запуска сценариев командой ${it}")
                 String vrunnerPath = VRunner.getVRunnerPath()
