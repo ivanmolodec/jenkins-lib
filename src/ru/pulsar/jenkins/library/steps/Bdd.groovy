@@ -6,9 +6,11 @@ import ru.pulsar.jenkins.library.ioc.ContextRegistry
 import ru.pulsar.jenkins.library.utils.Logger
 import ru.pulsar.jenkins.library.utils.VRunner
 
+import java.lang.reflect.Array
+
 class Bdd implements Serializable {
 
-    private final JobConfiguration config;
+    private final JobConfiguration config
 
     Bdd(JobConfiguration config) {
         this.config = config
@@ -29,19 +31,18 @@ class Bdd implements Serializable {
             steps.installLocalDependencies()
 
             steps.createDir('build/out')
-
-            try {
-                config.bddOptions.vrunnerSteps.each {
-                    Logger.println("Шаг запуска сценариев командой ${it}")
-                    String vrunnerPath = VRunner.getVRunnerPath();
-                    VRunner.exec("$vrunnerPath ${it} --ibconnection \"/F./build/ib\"")
-                }
-            } catch (Exception err) {
-                Logger.println(err.printStackTrace())
-                Logger.println(err.toString())
-                Logger.println(err.cause.toString())
-
-                steps.unstable(err.message)
+            def returnStatuses = []
+            config.bddOptions.vrunnerSteps.each {
+                Logger.println("Шаг запуска сценариев командой ${it}")
+                String vrunnerPath = VRunner.getVRunnerPath()
+                returnStatuses.add(VRunner.exec("$vrunnerPath ${it} --ibconnection \"/F./build/ib\""))
+            }
+            if (returnStatuses.contains(0) or returnStatuses.contains(2)) {
+                Logger.println("Тестирование сценариев завершилось успешно")
+            } else if (returnStatuses.contains(1)) {
+                steps.unstable("Тестирование сценариев завершилось, но часть фич/сценариев упала")
+            } else {
+                steps.error("Получен неожиданный/неверный результат работы. Возможно, работа 1С:Предприятие завершилась некорректно, или возникла ошибка при запуске")
             }
         }
 
