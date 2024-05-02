@@ -37,18 +37,13 @@ class Bdd implements Serializable {
                 String vrunnerPath = VRunner.getVRunnerPath()
                 returnStatuses.add(VRunner.exec("$vrunnerPath ${it} --ibconnection \"/F./build/ib\"", true))
             }
-            returnStatuses.each {
-                Logger.println("${it}")
-            }
-            Logger.println(returnStatuses.size().toString())
-            if (returnStatuses.contains(0) || returnStatuses.contains(2)) {
-                Logger.println("Тестирование сценариев завершилось успешно")
+
+            if (Collections.max(returnStatuses) > 2) {
+                steps.error("Получен неожиданный/неверный результат работы. Возможно, работа 1С:Предприятие завершилась некорректно, или возникла ошибка при запуске")
             } else if (returnStatuses.contains(1)) {
-                Logger.println("Тестирование сценариев завершилось, но часть фич/сценариев упала")
-                //steps.unstable("Тестирование сценариев завершилось, но часть фич/сценариев упала")
+                steps.unstable("Тестирование сценариев завершилось, но часть фич/сценариев упала")
             } else {
-                Logger.println("Получен неожиданный/неверный результат работы. Возможно, работа 1С:Предприятие завершилась некорректно, или возникла ошибка при запуске")
-                //steps.error()
+                Logger.println("Тестирование сценариев завершилось успешно")
             }
         }
 
