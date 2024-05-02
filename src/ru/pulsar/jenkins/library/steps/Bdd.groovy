@@ -37,8 +37,7 @@ class Bdd implements Serializable {
                 String vrunnerPath = VRunner.getVRunnerPath()
                 returnStatuses.add(VRunner.exec("$vrunnerPath ${it} --ibconnection \"/F./build/ib\"", true) as Integer)
             }
-            String maximum = Collections.max(returnStatuses).toString()
-            Logger.println("$maximum")
+
             if (Collections.max(returnStatuses) > 2) {
                 steps.error("Получен неожиданный/неверный результат работы. Возможно, работа 1С:Предприятие завершилась некорректно, или возникла ошибка при запуске")
             } else if (returnStatuses.contains(1)) {
